@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class ParseJSON {
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 
 		// Read the given json file and parse it using JSONParser
@@ -34,6 +35,7 @@ public class ParseJSON {
 			writer.println(obj.toJSONString());
 
 			writer.println(page);
+			writer.println();
 			counter++;
 		}
 		writer.close();

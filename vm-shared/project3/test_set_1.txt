@@ -1,0 +1,2 @@
+parallel: pararrel
+they: tehi

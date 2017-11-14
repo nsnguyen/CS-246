@@ -32,8 +32,19 @@ public class SpellChecker {
     		for(Integer value : dict.values()) {
     			corpusCount += value;
     		}
+    		
+    		//TODO: Remove this
+    		System.out.println("calculateLM word: " + word);
+    		System.out.println("calculateLM dict: " + dict.get(word));
+    		System.out.println("calculateLM corpusCount: " + corpusCount);
     	
-        return dict.get(word) / corpusCount;
+    		double LMResult = dict.get(word) / corpusCount;
+    		
+    		
+    		//TODO: remove this.
+    		System.out.println("LMResult: " + LMResult);
+    		
+        return LMResult;
     }
 
     /*
@@ -43,6 +54,118 @@ public class SpellChecker {
      */
     public double calculateEM(String word, String correction, double editDistance) {
         // For Task 1, we simply return 1 as the error model P(correction|word) 
+    	
+    		//TODO: need to implement this function. Need to figure out how to find probability of correction given word.
+    		//TODO: remove this.
+    		System.out.println("===========CalculateEM function=======");
+    		
+    		System.out.println("word: " + word);
+    		System.out.println("correction: " + correction);
+    		System.out.println("editDistance:" + editDistance);
+    		
+    		
+    		List<Character> wordListArray = new ArrayList<Character>();
+    		List<Character> correctionListArray = new ArrayList<Character>();   		
+    		Set<Character> vowels = new HashSet<Character>() {{
+    			add('a');
+    			add('e');
+    			add('i');
+    			add('o');
+    			add('u');
+    		}};
+    		
+    		
+    		// build Lists without vowels, but in ordered.
+    		// Some words without vowels are more efficient, as long the other letters are in ordered.
+    		for(char letter : word.toCharArray()) {
+    			if(!vowels.contains(letter)) {
+    				wordListArray.add(letter);
+    			}
+    		}
+    		
+    		for(char letter: correction.toCharArray()) {
+    			if(!vowels.contains(letter)) {
+        			correctionListArray.add(letter);
+    			}
+    		}
+    		
+    		//TODO: remove this.
+    		System.out.println("wordListArray:" + wordListArray);
+    		System.out.println("correctionListArray:" + correctionListArray);
+    		
+    		if(Arrays.equals(wordListArray.toArray(), correctionListArray.toArray())) {
+    			//if both arrays are exactly the same in order.. then return a large number (infinitely big)
+    			return Double.MAX_VALUE;
+    		}
+    		
+    		// Assume that the order does matter. Also assume that each character has the same probability in correction
+    		// Ex: for the correction word totally (removing the vowels) = ttlly
+    		// There are 5 characters (20% probability for char) so each character has a weight of 20%.
+    		Set<Character> uniqueCorrectionChar = new HashSet<Character>(correctionListArray);
+    		Set<Character> uniqueWordChar = new HashSet<Character>(wordListArray);
+    		
+    		double eachCharListWeight = 100.0 / wordListArray.size();
+    		double eachCharSetWeight = 100.0 / uniqueCorrectionChar.size();
+    		
+    		double EMResult = 0.0;
+    		
+    		//TODO: Rremove this.
+    		System.out.println(eachCharListWeight);  		
+    		System.out.println(uniqueCorrectionChar);
+    		System.out.println(uniqueWordChar);
+    		
+    		
+//    		for(int i = 0; i < wordListArray.size() - 1; i++) {
+//    			char correctionChar = correctionListArray.get(i);
+//    			char wordChar = wordListArray.get(i);
+//    			double weight = 0.0;
+//    			if(correctionChar == wordChar) {
+//    				weight += eachCharListWeight;
+//    				System.out.println(correctionChar);
+//    				System.out.println(wordChar);
+//    				System.out.println(weight);
+//    			}
+//    			else {
+//    				if(uniqueCorrectionChar.contains(wordChar)) {
+//    					weight = eachCharListWeight * eachCharSetWeight;
+//    				}
+//    			}
+//    			EMResult += weight;
+//    		}
+    		
+//    		for(char i : correctionListArray) {
+//    			for(char j : wordListArray) {
+//    				double weight = 0.0;
+//    				System.out.println(i);
+//    				System.out.println(j);
+//    				if( i == j) {
+//    					weight += eachCharListWeight;
+//    					System.out.println(weight);
+//        				EMResult += weight;
+//    					break;
+////    					if(uniqueCorrectionChar.contains(j)) {
+////    						weight *= eachCharSetWeight;
+////    					}
+//    				}
+//    				else {
+//    					weight -= eachCharListWeight;
+//    				}
+////    				System.out.println("eachCharListWeight:" + eachCharListWeight);
+////    				System.out.println("eachCharSetWeight:" + eachCharSetWeight);
+//
+//    			}
+//    		}
+    		
+    	
+//    		System.out.println("EMResult: " + EMResult);
+//    		
+//    		
+//    		
+//    		
+//    		System.out.println("===========end calculateEM function======");
+    		
+
+    		// return 1.0 has accuracy of 74.34%
         return 1.0;
     }
 
@@ -55,93 +178,54 @@ public class SpellChecker {
     private Map < String, Double > EditDist1(String word) {
         Map < String, Double > cands = new HashMap < > ();
         for (int i = 0; i <= word.length(); ++i) {
-
             // split the word at position i
             String L = word.substring(0, i);
-            
-//            System.out.println("L: " + L);
-            
-
             String R = word.substring(i);
-            
-//            System.out.println("R: " + R);
-            
             String temp;
 
             // "deletion at [i]": drop the character at the current position i
             // goal: to hopefully remove an extra character so there will be a word that is matched.
             if (R.length() > 0) {
-                temp = L + R.substring(1);
-                           
-//                System.out.println("R.substring(1): " + R.substring(1));
-//                System.out.println("temp:" + temp);
-                
+                temp = L + R.substring(1);                        
                 cands.put(temp, 1.0); // 1.0 indicates the edit distance 1
             }
-            
-            
-            
+                      
             // "insertion at [i]" insert an alphabet (a-z) at the current position i
             // goal: to insert each character in the alphabet hoping there is a word that will match.
             for (int j = 0; j < alphabet.length(); ++j) {
-                temp = L + alphabet.charAt(j) + R;
-                
-//                System.out.println("temp: " + temp);
-                       
+                temp = L + alphabet.charAt(j) + R;         
                 cands.put(temp, 1.0); // 1.0 indicates the edit distance 1
             }
-            
-            
 
-            // TODO: implement transposition operator here
             // "swapping char at [i]" with all other places.
             // goal: to swap all chars in position hoping there is a word that will match.
             if(R.length() > 0) {
-            		for (int j = 0 ; j < R.length(); ++j){
-            			
-            			
+            		for (int j = 0 ; j < R.length(); ++j){    			         			
             			char[] charArray = R.toCharArray();
-            			
-//            			System.out.println("R:" + R);
-            			            			
-            			
+    			
             			for (int k = 1; k < charArray.length; ++k) {
             				char tempChar = charArray[j];
             				charArray[j] = charArray[k];
             				charArray[k] = tempChar;
-//            				
+           				
             				temp = L + String.valueOf(charArray);
-            				
-//            				System.out.println(temp);
-            				
+		
             				cands.put(temp, 1.0); //1.0 indicates the edit distance 1
-            				
-//            				System.out.println(charArray[j]);
-//            				System.out.println(charArray[k]);
             			}
             		}
             }
-            
-            
-            
-            
 
-            // TODO: implement substitution operator here
             // "substitution at [i]". substitute an alphabet(a-z) at current position i
             // goal: to substitute each character in the alphabet hoping there is a word that will match.
             for (int j = 0; j < alphabet.length(); ++j) {
             		if(R.length() > 0) {
                 		temp = L + alphabet.charAt(j) + R.substring(1);
-                		
-//                		System.out.println("temp: " + temp);
-                		
                 		cands.put(temp, 1.0); // 1.0 indicates the edit distance 1
             		}
         		}
-
-
         }
         
+        //TODO: Remove this.
         System.out.println("===========EditDist1 cands: " + cands);
         return cands;
     }
@@ -173,6 +257,8 @@ public class SpellChecker {
                 cands.put(str2, dist + dist2);
             }
         }
+        
+        //TODO: remove this.
         System.out.println("===========EditDist2 cands: " + cands);
 
         return cands;
@@ -185,6 +271,10 @@ public class SpellChecker {
      */
     public Map < String, Double > generateCandidates(String word) {
         Map < String, Double > cand = new HashMap < > ();
+        
+        
+        //TODO: Remove this.
+        System.out.println("generateCandidate word: "+ word);
 
         // if the input word appears in the dictionary, we simply return the word as the only candidate with edit distance 0
         if (dict.containsKey(word)) {
@@ -194,14 +284,19 @@ public class SpellChecker {
 
         // obtain all strings within edit distance 1 of the input word
         Map < String, Double > ed1 = EditDist1(word);
+        
+//        System.out.println("ed1.keySet():" + ed1.keySet());
 
         // add an edit-distance-1 string to the candidate set only if it appears in the dictionary
+        //TODO: minuscule: miniscule (does not contain in dict). Need to implement something else...
         for (String str: ed1.keySet()) {
-            if (dict.containsKey(str)) cand.put(str, ed1.get(str));
+        		if (dict.containsKey(str)) {
+        			cand.put(str, ed1.get(str));
+            }
         }
         
-        System.out.println("generateCandidate: " + cand);
         
+  
         // if there is any dictionary entry within edit-distance-1, we return them as the candidate set
         if (!cand.isEmpty()) return cand;
 
@@ -213,6 +308,10 @@ public class SpellChecker {
         for (String str: ed2.keySet()) {
             if (dict.containsKey(str)) cand.put(str, ed2.get(str));
         }
+        
+        //TODO: remove this.
+        System.out.println("generateCandidate: " + cand);
+        
         return cand;
     }
 
@@ -229,15 +328,32 @@ public class SpellChecker {
         // iterate over every word in the candidate set and return the one with the highest probability
         double maxp = 0.0;
         String c = word;
+        
+        //TODO: remove this.
+        System.out.println("wrong word here: " + word);
+        
         for (String str: candidates.keySet()) {
 
+        		//TODO: REmove this.
+        		System.out.println("===============findCorrection======================");
+        		System.out.println("word in candidates: " + str);
+        		
             // compute P(str|word) = P(word|str) * P(str)  
             double prob = calculateEM(word, str, candidates.get(str)) * calculateLM(str);
+           
+
+            //TODO: remove this.
+            System.out.println("prob: " + prob);
+            
             if (prob > maxp) {
                 maxp = prob;
                 c = str;
             }
         }
+        
+        //TODO: remove this.
+        System.out.println("Find Prediction: " + c);
+        
         return c;
     }
 

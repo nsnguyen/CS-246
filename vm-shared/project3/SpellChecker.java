@@ -66,22 +66,6 @@ public class SpellChecker {
 				cands.put(temp, 1.0); // 1.0 indicates the edit distance 1
 			}
 
-			
-			// "swapping char at [i]" with all other places.
-			if (R.length() > 0) {
-				for (int j = 0; j < R.length(); ++j) {
-					char[] charArray = R.toCharArray();
-					
-					for (int k = 1; k < charArray.length; ++k) {
-						char tempChar = charArray[j];
-						charArray[j] = charArray[k];
-						charArray[k] = tempChar;
-						temp = L + String.valueOf(charArray);
-						cands.put(temp, 1.0); // 1.0 indicates the edit distance 1
-					}
-				}
-			}
-			
 			//"transposition at [i]" by swapping two adjacents char
 			char[] charArray = word.toCharArray();
 			if(R.length() > 1) {			
@@ -211,8 +195,8 @@ public class SpellChecker {
     Input: The filename of dictionary
     Output: A map with contents <dictionary word, frequency>
     You do not need to modify this function
- */
-private Map < String, Integer > readDictionary(String dictionaryFile) throws IOException {
+     */
+	private Map < String, Integer > readDictionary(String dictionaryFile) throws IOException {
     dict = new HashMap < > ();
     InputStreamReader fis = new InputStreamReader(new FileInputStream(dictionaryFile));
     BufferedReader br = new BufferedReader(fis);
@@ -231,72 +215,72 @@ private Map < String, Integer > readDictionary(String dictionaryFile) throws IOE
     return dict;
 }
 
-/*
-    readTestset: read testset file and return the <wrong spelling, correct word> pair in a map
-    Input: The filename of testset
-    Output: A map with contents <wrong spelling, correct word>
-    You do not need to modify this function
- */
-private Map < String, String > readTestset(String testsetFile) throws IOException {
-    Map < String, String > cases = new HashMap < > ();
-    InputStreamReader fis = new InputStreamReader(new FileInputStream(testsetFile));
-    BufferedReader br = new BufferedReader(fis);
-    String line;
-    while ((line = br.readLine()) != null) {
-        String[] temp1 = line.split(":");
-        String right = temp1[0].trim();
-        String[] wrongs = temp1[1].split(" ");
-        for (String wrong: wrongs)
-            if (!wrong.equals(" ") && !wrong.isEmpty())
-                cases.put(wrong.trim(), right);
-    }
-    br.close();
-    fis.close();
-    return cases;
-}
-
-/*
-    runTestcases: run spell correction algorithm on all test_caes and prints out the results
-    Input: test_cases - a map of <wrong spelling, correct word> pairs
-           print_all - if true, the function print out the correction result for each test case
-    IMPORTANT: DO NOT MODIFY THIS FUNCTION!!! 
-               IT WILL MAKE OUR GRADING SCRIPT FAIL!
- */
-public void runTestcases(Map < String, String > test_cases, boolean print_all) {
-    int n = test_cases.size();
-    int nCorrect = 0, nUnknown = 0;
-    boolean accurate;
-    for (String wrong: test_cases.keySet()) {
-        Map < String, Double > candidates = generateCandidates(wrong);
-        String predict = findCorrection(wrong, candidates);
-        accurate = predict.equals(test_cases.get(wrong));
-        if (accurate) nCorrect++;
-        else {
-            if (!dict.containsKey(test_cases.get(wrong)))
-                nUnknown++;
-        }
-        if (print_all)
-            System.out.println(wrong + " -> " + predict + ": " + (accurate ? '1' : '0'));
-    }
-    NumberFormat formatter = new DecimalFormat("#0.00");
-    System.out.println("FINAL RESULT: " + 
-                       nCorrect + " of " + n + " correct. ( " +
-                       formatter.format(nCorrect*100.0/n) + "% accuracy " +
-                       formatter.format(nUnknown*100.0/n) + "% unknown )");
-}
-
-/*
-    The main function: 
-    args[0] is the path of dictionary.
-    args[1] is the path of test set.
-    args[2] is optional, decide whether to output the full lists of predictions.
-    IMPORTANT: DO NOT CHANGE THE COMMAND LINE PARAMETERS!!! 
-               IT WILL BREAK OUR GRADING SCRIPT
- */
-public static void main(String args[]) throws IOException {
-    SpellChecker sc = new SpellChecker(args[0]);
-    Map < String, String > testset = sc.readTestset(args[1]);
-    boolean printAll = (args.length < 3) ? true : Boolean.parseBoolean(args[2]);
-    sc.runTestcases(testset, printAll);
-}
+	/*
+	    readTestset: read testset file and return the <wrong spelling, correct word> pair in a map
+	    Input: The filename of testset
+	    Output: A map with contents <wrong spelling, correct word>
+	    You do not need to modify this function
+	 */
+	private Map < String, String > readTestset(String testsetFile) throws IOException {
+	    Map < String, String > cases = new HashMap < > ();
+	    InputStreamReader fis = new InputStreamReader(new FileInputStream(testsetFile));
+	    BufferedReader br = new BufferedReader(fis);
+	    String line;
+	    while ((line = br.readLine()) != null) {
+	        String[] temp1 = line.split(":");
+	        String right = temp1[0].trim();
+	        String[] wrongs = temp1[1].split(" ");
+	        for (String wrong: wrongs)
+	            if (!wrong.equals(" ") && !wrong.isEmpty())
+	                cases.put(wrong.trim(), right);
+	    }
+	    br.close();
+	    fis.close();
+	    return cases;
+	}
+	
+	/*
+	    runTestcases: run spell correction algorithm on all test_caes and prints out the results
+	    Input: test_cases - a map of <wrong spelling, correct word> pairs
+	           print_all - if true, the function print out the correction result for each test case
+	    IMPORTANT: DO NOT MODIFY THIS FUNCTION!!! 
+	               IT WILL MAKE OUR GRADING SCRIPT FAIL!
+	 */
+	public void runTestcases(Map < String, String > test_cases, boolean print_all) {
+	    int n = test_cases.size();
+	    int nCorrect = 0, nUnknown = 0;
+	    boolean accurate;
+	    for (String wrong: test_cases.keySet()) {
+	        Map < String, Double > candidates = generateCandidates(wrong);
+	        String predict = findCorrection(wrong, candidates);
+	        accurate = predict.equals(test_cases.get(wrong));
+	        if (accurate) nCorrect++;
+	        else {
+	            if (!dict.containsKey(test_cases.get(wrong)))
+	                nUnknown++;
+	        }
+	        if (print_all)
+	            System.out.println(wrong + " -> " + predict + ": " + (accurate ? '1' : '0'));
+	    }
+	    NumberFormat formatter = new DecimalFormat("#0.00");
+	    System.out.println("FINAL RESULT: " + 
+	                       nCorrect + " of " + n + " correct. ( " +
+	                       formatter.format(nCorrect*100.0/n) + "% accuracy " +
+	                       formatter.format(nUnknown*100.0/n) + "% unknown )");
+	}
+	
+	/*
+	    The main function: 
+	    args[0] is the path of dictionary.
+	    args[1] is the path of test set.
+	    args[2] is optional, decide whether to output the full lists of predictions.
+	    IMPORTANT: DO NOT CHANGE THE COMMAND LINE PARAMETERS!!! 
+	               IT WILL BREAK OUR GRADING SCRIPT
+	 */
+	public static void main(String args[]) throws IOException {
+	    SpellChecker sc = new SpellChecker(args[0]);
+	    Map < String, String > testset = sc.readTestset(args[1]);
+	    boolean printAll = (args.length < 3) ? true : Boolean.parseBoolean(args[2]);
+	    sc.runTestcases(testset, printAll);
+	}
 }

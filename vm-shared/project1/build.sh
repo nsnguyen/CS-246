@@ -41,7 +41,7 @@ curl -XPUT 'localhost:9200/task2a?pretty' -H 'Content-Type: application/json' -d
   }
 }
 '
-curl -XPOST  localhost:9200/task2a/_bulk?pretty=true --data-binary @data/out.txt
+curl -XPOST  localhost:9200/task1a/_bulk?pretty=true --data-binary @data/out.txt
 
 curl -s -XPOST 'localhost:9200/_refresh?pretty'
 

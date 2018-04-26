@@ -1,0 +1,172 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0{
+  "took" : 1,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 5,
+    "successful" : 5,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : 221,
+    "max_score" : 16.210535,
+    "hits" : [
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "113664",
+        "_score" : 16.210535,
+        "_source" : {
+          "clicks" : 9912,
+          "abstract" : "thumb|right|300px|Steve Koven performing",
+          "title" : "Steve Koven",
+          "url" : "https://simple.wikipedia.org/wiki/Steve_Koven",
+          "sections" : "References"
+        }
+      },
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "105159",
+        "_score" : 16.204876,
+        "_source" : {
+          "clicks" : 9200,
+          "abstract" : "Stephen J. \"Steve\" DitkoBell, Blake.",
+          "title" : "Steve Ditko",
+          "url" : "https://simple.wikipedia.org/wiki/Steve_Ditko",
+          "sections" : [
+            "References",
+            "Other websites"
+          ]
+        }
+      },
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "17587",
+        "_score" : 15.950501,
+        "_source" : {
+          "clicks" : 7006,
+          "abstract" : "thumb|right|[[Steve Jobs, former chairman of Apple Inc.]]",
+          "title" : "Chairperson",
+          "url" : "https://simple.wikipedia.org/wiki/Chairperson",
+          "sections" : "Business"
+        }
+      },
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "31504",
+        "_score" : 13.116978,
+        "_source" : {
+          "clicks" : 8478,
+          "abstract" : "The Steve Miller Band is an American blues rock band led by Steve Miller.",
+          "title" : "Steve Miller Band",
+          "url" : "https://simple.wikipedia.org/wiki/Steve_Miller_Band",
+          "sections" : "Discography"
+        }
+      },
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "13715",
+        "_score" : 12.126673,
+        "_source" : {
+          "clicks" : 5465,
+          "abstract" : "| birth_place        = San Francisco, California, U.S.",
+          "title" : "Steve Jobs",
+          "url" : "https://simple.wikipedia.org/wiki/Steve_Jobs",
+          "sections" : [
+            "Biography",
+            "References",
+            "Other websites",
+            "Interviews"
+          ]
+        }
+      },
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "121531",
+        "_score" : 11.889124,
+        "_source" : {
+          "clicks" : 7005,
+          "abstract" : "|successor1   = Vacant",
+          "title" : "Steve Bannon",
+          "url" : "https://simple.wikipedia.org/wiki/Steve_Bannon",
+          "sections" : "References"
+        }
+      },
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "89709",
+        "_score" : 11.325089,
+        "_source" : {
+          "clicks" : 3745,
+          "abstract" : "| death_date          =",
+          "title" : "Steve Lillywhite",
+          "url" : "https://simple.wikipedia.org/wiki/Steve_Lillywhite",
+          "sections" : "References"
+        }
+      },
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "116389",
+        "_score" : 8.633372,
+        "_source" : {
+          "clicks" : 4018,
+          "abstract" : "Lohoré Steve Ulrich Gohouri (8 February 1981 – December 2015), better known as Steve Gohouri, was an Ivorian professional footballer. He played as a defender from 1998 until his death.",
+          "title" : "Steve Gohouri",
+          "url" : "https://simple.wikipedia.org/wiki/Steve_Gohouri",
+          "sections" : [
+            "References",
+            "Other websites"
+          ]
+        }
+      },
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "95053",
+        "_score" : 8.307343,
+        "_source" : {
+          "clicks" : 5774,
+          "abstract" : "Jobs is a 2013 American biographical drama movie. The movie was based on the life of Apple Inc.",
+          "t100  4986  100  4986    0     0   250k      0 --:--:-- --:--:-- --:--:--  256k
+itle" : "Jobs (movie)",
+          "url" : "https://simple.wikipedia.org/wiki/Jobs_(movie)",
+          "sections" : [
+            "2013 movies",
+            "American biographical movies",
+            "American drama movies",
+            "English language movies",
+            "Movie stubs",
+            "Steve Jobs"
+          ]
+        }
+      },
+      {
+        "_index" : "task3b",
+        "_type" : "wikipage",
+        "_id" : "68019",
+        "_score" : 8.304419,
+        "_source" : {
+          "clicks" : 5041,
+          "abstract" : "Steve McQueen (March 24, 1930 - November 7, 1980) was an American actor.",
+          "title" : "Steve McQueen",
+          "url" : "https://simple.wikipedia.org/wiki/Steve_McQueen",
+          "sections" : [
+            "Career",
+            "Television",
+            "References",
+            "More reading"
+          ]
+        }
+      }
+    ]
+  }
+}
